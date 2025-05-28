@@ -10,6 +10,8 @@ public class CameraControl : MonoBehaviour
     private float yaw = 0f;
     private float pitch = 0f;
 
+
+
     // Update is called once per frame
     void Update()
     {
