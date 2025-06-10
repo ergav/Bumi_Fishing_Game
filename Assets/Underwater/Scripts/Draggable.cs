@@ -1,14 +1,14 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Draggable : MonoBehaviour
 {
     Vector3 mousePosition;
 
-    public delegate void DragEndedDelegate(Draggable draggableObject);
-
-    public DragEndedDelegate dragEndedCallback;
-
     private bool isDragged = false;
+
+    public ItemSO itemSO;
+    public InventoryManager inventoryManager;
 
     private Vector3 GetMousePosition()
     {
@@ -27,12 +27,6 @@ public class Draggable : MonoBehaviour
         {
             transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition - mousePosition);
         }
-    }
-
-    private void OnMouseUp()
-    {
-        isDragged = false;
-        dragEndedCallback(this);
     }
 }
 

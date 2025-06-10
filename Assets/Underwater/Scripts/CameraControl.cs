@@ -1,18 +1,18 @@
 using UnityEngine;
+using System.Collections.Generic;
+using System.Collections;
 
 public class CameraControl : MonoBehaviour
 {
-    [SerializeField] Transform target;
-    [SerializeField] float distanceFromTarget = 5f;
+    [SerializeField] private Transform target;
+    [SerializeField] private float distanceFromTarget = 5f;
+    [SerializeField] private Camera cam;
+    [SerializeField] private InventoryManager inventoryManager;
 
     private float sensitivity = 1000f;
-
     private float yaw = 0f;
     private float pitch = 0f;
 
-
-
-    // Update is called once per frame
     void Update()
     {
         HandleInput();
@@ -24,6 +24,23 @@ public class CameraControl : MonoBehaviour
         Quaternion yawRotation = Quaternion.Euler(pitch, yaw, 0f);
 
         RotateCamera(yawRotation);
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit, 3))
+            {
+                Draggable item = hit.collider.GetComponent<Draggable>();
+
+                if (item != null)
+                {
+                    inventoryManager.ItemPicked(hit.collider.gameObject);
+
+                }
+            }
+        }
     }
 
     public void HandleInput()
@@ -47,9 +64,8 @@ public class CameraControl : MonoBehaviour
 
     void RotateCamera(Quaternion rotation)
     {
-        Vector3 positionOffset = rotation * new Vector3 (0, 0, -distanceFromTarget);
+        Vector3 positionOffset = rotation * new Vector3(0, 0, -distanceFromTarget);
         transform.position = target.position + positionOffset;
         transform.rotation = rotation;
     }
-        
 }

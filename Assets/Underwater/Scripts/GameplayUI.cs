@@ -8,13 +8,6 @@ public class GameplayUI : MonoBehaviour
     public List<Draggable> draggableObjects;
     public float snapRange = 0.5f;
 
-    private void Start()
-    {
-        foreach (Draggable draggable in draggableObjects)
-        {
-            draggable.dragEndedCallback -= OnDragEnded;
-        }
-    }
 
     private void OnDragEnded(Draggable draggable)
     {
