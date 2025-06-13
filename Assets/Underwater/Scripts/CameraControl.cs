@@ -37,7 +37,6 @@ public class CameraControl : MonoBehaviour
                 if (item != null)
                 {
                     inventoryManager.ItemPicked(hit.collider.gameObject);
-
                 }
             }
         }

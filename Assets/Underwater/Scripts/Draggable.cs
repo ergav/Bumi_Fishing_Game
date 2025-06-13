@@ -1,12 +1,11 @@
+// REPLACE your entire Draggable.cs with this simple version:
+
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class Draggable : MonoBehaviour
 {
     Vector3 mousePosition;
-
     private bool isDragged = false;
-
     public ItemSO itemSO;
     public InventoryManager inventoryManager;
 

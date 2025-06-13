@@ -1,19 +1,20 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using NUnit.Framework.Internal.Execution;
 
 public class InventoryManager : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
-    [SerializeField] GameObject[] slots = new GameObject[4];
-    [SerializeField] GameObject inventoryParent;
-    [SerializeField] GameObject itemPrefab;
-    [SerializeField] Camera cam;
+    [SerializeField] private GameObject[] slots = new GameObject[4];
+    [SerializeField] private GameObject inventoryParent;
+    [SerializeField] private GameObject itemPrefab;
+    [SerializeField] private Camera cam;
 
 
-    GameObject draggedItem;
-    GameObject lastItemSlot;
+    private GameObject draggedItem;
+    private GameObject lastItemSlot;
 
-    bool isInventoryOpened;
+    public bool isInventoryOpened;
 
     private void Update()
     {
