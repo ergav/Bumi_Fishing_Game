@@ -66,7 +66,7 @@ public class Control : MonoBehaviour
 
             if (_fishedObject != null)
             {
-                Destroy(_fishedObject.gameObject);
+                _fishedObject.Collect();
                 _fishedObject = null;
             }
         }
@@ -78,9 +78,14 @@ public class Control : MonoBehaviour
 
         if (col != null)
         {
+            Fishable collidedFishable = col.gameObject.GetComponent<Fishable>();
+
+            if (collidedFishable.IsGrabbed)
+                return;
+
             col.transform.position = _hookItemPoint.transform.position;
             col.transform.SetParent(_hookItemPoint);
-            _fishedObject = col.gameObject.GetComponent<Fishable>();
+            _fishedObject = collidedFishable;
             _fishedObject.IsGrabbed = true;
         }
     }

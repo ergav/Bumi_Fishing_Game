@@ -10,6 +10,8 @@ public class Bubble : MonoBehaviour
 
     private bool                        _isHoldingItem;
 
+    private Fishable                    _fishedObject;
+
     private void Start()
     {
         _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
@@ -56,6 +58,7 @@ public class Bubble : MonoBehaviour
             if (fished.IsGrabbed)
                 return;
 
+            _fishedObject = fished;
             collision.transform.position = transform.position;
             collision.transform.SetParent(transform);
             _isHoldingItem = true;
@@ -64,14 +67,14 @@ public class Bubble : MonoBehaviour
             float newSize = (sr.sprite.bounds.size.x * sr.transform.localScale.x) + 2;
 
             _spriteRenderer.transform.localScale = new Vector2(newSize, newSize);
-            Debug.Log("Grab");
 
-            fished.IsGrabbed = true;
+            _fishedObject.IsGrabbed = true;
         }
     }
 
     public void OnReachSurface()
     {
+        _fishedObject.Collect();
         Destroy(gameObject);
     }
 }
