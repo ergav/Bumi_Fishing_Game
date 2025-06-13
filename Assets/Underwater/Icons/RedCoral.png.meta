@@ -160,7 +160,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      RedCoral_0: 6092279074555388371
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
