@@ -27,6 +27,11 @@ public class BubbleLauncher : MonoBehaviour
         Vector2 forward = transform.TransformDirection(Vector2.left);
         Vector2 toOther = Vector3.Normalize(mousePos3D - transform.position);
 
+        if (Vector3.Dot(forward, Vector2.up) < 0.1)
+        {
+            return;
+        }
+
         Bubble firedBubble = Instantiate(_bubblePrefab.GetComponent<Bubble>(), _muzzle.position, Quaternion.identity);
         firedBubble.OnInstantiate(toOther, _bubbleSpeed);
     }
