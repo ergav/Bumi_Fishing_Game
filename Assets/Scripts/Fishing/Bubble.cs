@@ -89,6 +89,26 @@ public class Bubble : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         _rigidbody.gravityScale = 0.5f;
+
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Fishable"))
+        {
+            Fishable fished = collision.gameObject.GetComponent<Fishable>();
+
+            if (fished.IsGrabbed)
+                return;
+
+            _fishedObject = fished;
+            collision.transform.position = transform.position;
+            collision.transform.SetParent(transform);
+            _isHoldingItem = true;
+
+            SpriteRenderer sr = collision.gameObject.GetComponent<SpriteRenderer>();
+            float newSize = (sr.sprite.bounds.size.x * sr.transform.localScale.x) + 2;
+
+            _spriteRenderer.transform.localScale = new Vector2(newSize, newSize);
+
+            _fishedObject.IsGrabbed = true;
+        }
     }
 
     public void OnReachSurface()

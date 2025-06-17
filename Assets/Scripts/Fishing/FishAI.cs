@@ -25,6 +25,7 @@ public class FishAI : Fishable
         { 
             _rigidbody.bodyType = RigidbodyType2D.Kinematic;
             _rigidbody.linearVelocity = Vector2.zero;
+            _spriteRenderer.flipY = true;
         }
     }
 
