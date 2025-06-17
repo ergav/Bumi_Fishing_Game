@@ -37,25 +37,13 @@ public class Bubble : MonoBehaviour
             {
                 OnReachSurface();
             }
+
+            return;
         }
 
-        //if (!_isHoldingItem)
-        //{
-        //    transform.Translate(_direction * (_speed * Time.deltaTime));
-        //    _lifetime -= Time.deltaTime;
-
-        //    if (_lifetime <= 0 )
-        //        Destroy(gameObject);
-        //}
-        //else
-        //{
-        //    transform.Translate(Vector2.up * (5 * Time.deltaTime));
-
-        //    if (transform.position.y > 3)
-        //    {
-        //        OnReachSurface();
-        //    }
-        //}
+        _lifetime -= Time.deltaTime;
+        if (_lifetime <= 0)
+            Destroy(gameObject);
     }
 
     public void OnInstantiate(Vector2 dir, float speed = 10, float lifetime = 10)
