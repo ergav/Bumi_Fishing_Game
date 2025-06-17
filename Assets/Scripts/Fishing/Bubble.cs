@@ -12,42 +12,68 @@ public class Bubble : MonoBehaviour
 
     private Fishable                    _fishedObject;
 
-    private void Start()
+    public bool                         IsHoldingItem => _isHoldingItem;
+
+    private Rigidbody2D                 _rigidbody;
+    private Collider2D                  _collider;
+
+    private void Awake()
     {
+        _rigidbody = GetComponent<Rigidbody2D>();
         _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        _collider = GetComponentInChildren<Collider2D>();
     }
 
     void Update()
     {
-        if (!_isHoldingItem)
+        if (_isHoldingItem)
         {
-            transform.Translate(_direction * (_speed * Time.deltaTime));
-        }
-        else
-        {
-            transform.Translate(Vector2.up * (5 * Time.deltaTime));
+            _collider.isTrigger = true;
+            _rigidbody.linearVelocity = Vector2.zero;
+            _rigidbody.bodyType = RigidbodyType2D.Kinematic;
+            transform.Translate(Vector2.up * (5 * Time.deltaTime), Space.World);
 
             if (transform.position.y > 3)
             {
                 OnReachSurface();
             }
         }
+
+        //if (!_isHoldingItem)
+        //{
+        //    transform.Translate(_direction * (_speed * Time.deltaTime));
+        //    _lifetime -= Time.deltaTime;
+
+        //    if (_lifetime <= 0 )
+        //        Destroy(gameObject);
+        //}
+        //else
+        //{
+        //    transform.Translate(Vector2.up * (5 * Time.deltaTime));
+
+        //    if (transform.position.y > 3)
+        //    {
+        //        OnReachSurface();
+        //    }
+        //}
     }
 
-    public void OnInstantiate(Vector2 _dir, float _speed = 10, float _lifetime = 10)
+    public void OnInstantiate(Vector2 dir, float speed = 10, float lifetime = 10)
     {
-        _direction = _dir;
-        this._speed = _speed;
-        this._lifetime = _lifetime;
+        _direction = dir;
+        _speed = speed;
+        _lifetime = lifetime;
 
-        StartCoroutine(LifeSpan());
+        _rigidbody.AddForce(_direction * speed, ForceMode2D.Impulse);
+
+        //StartCoroutine(LifeSpan());
     }
 
-    IEnumerator LifeSpan()
-    {
-        yield return new WaitForSeconds(_lifetime);
-        Destroy(gameObject);
-    }
+    //IEnumerator LifeSpan()
+    //{
+    //    yield return new WaitForSeconds(_lifetime);
+    //    Destroy(gameObject);
+    //}
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -70,6 +96,11 @@ public class Bubble : MonoBehaviour
 
             _fishedObject.IsGrabbed = true;
         }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        _rigidbody.gravityScale = 0.5f;
     }
 
     public void OnReachSurface()
