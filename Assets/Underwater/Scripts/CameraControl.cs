@@ -24,22 +24,6 @@ public class CameraControl : MonoBehaviour
         Quaternion yawRotation = Quaternion.Euler(pitch, yaw, 0f);
 
         RotateCamera(yawRotation);
-
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit, 3))
-            {
-                Draggable item = hit.collider.GetComponent<Draggable>();
-
-                if (item != null)
-                {
-                    inventoryManager.ItemPicked(hit.collider.gameObject);
-                }
-            }
-        }
     }
 
     public void HandleInput()

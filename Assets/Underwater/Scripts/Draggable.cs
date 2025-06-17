@@ -1,13 +1,15 @@
-// REPLACE your entire Draggable.cs with this simple version:
-
 using UnityEngine;
+
 
 public class Draggable : MonoBehaviour
 {
     Vector3 mousePosition;
     private bool isDragged = false;
-    public ItemSO itemSO;
+
     public InventoryManager inventoryManager;
+    public ItemSO itemSO;
+
+    public static event System.Action<Draggable> OnDragEnded;
 
     private Vector3 GetMousePosition()
     {
@@ -26,6 +28,12 @@ public class Draggable : MonoBehaviour
         {
             transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition - mousePosition);
         }
+    }
+
+    private void OnMouseUp()
+    {
+        isDragged = false;
+        OnDragEnded?.Invoke(this);
     }
 }
 

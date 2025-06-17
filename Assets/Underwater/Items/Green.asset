@@ -9,10 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be748e0630bcc134abf74600ed5c7073, type: 3}
+  m_Script: {fileID: 11500000, guid: 13f40f951e1192d4db0086f32f5ac4c0, type: 3}
   m_Name: Green
   m_EditorClassIdentifier: 
   itemName: Green Coral
   icon: {fileID: 2133894634611221711, guid: c12fc8899a884c549982629c750649a6, type: 3}
-  prefab: {fileID: 3548894794855514581, guid: 3a4403fa1a13504459f79bda409713d3, type: 3}
-  maxStack: 0
