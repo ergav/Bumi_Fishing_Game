@@ -83,7 +83,7 @@ public class BubbleLauncher : MonoBehaviour
         }
 
         _firedBubble = Instantiate(_bubblePrefab.GetComponent<Bubble>(), _muzzle.position, Quaternion.identity);
-        _firedBubble.OnInstantiate(toOther, _bubbleSpeed, _bubbleLifetime);
+        _firedBubble.OnInstantiate(toOther, _bubbleSpeed, _bubbleLifetime, _maxBounces);
 
         ToggleUIOff();
 
