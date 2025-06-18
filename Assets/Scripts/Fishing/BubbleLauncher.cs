@@ -11,6 +11,7 @@ public class BubbleLauncher : MonoBehaviour
     [SerializeField] private SpriteRenderer     _crosshair;
     [SerializeField] private GameObject         _bubbleGunUI;
     [SerializeField] private bool               _willCameraFollowBubble;
+    [SerializeField] private int                _maxBounces = 3;
 
     private Bubble                              _firedBubble;
     private CameraFollow                        _camera;

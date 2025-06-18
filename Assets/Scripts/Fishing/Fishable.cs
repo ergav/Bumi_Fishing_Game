@@ -7,14 +7,18 @@ public class Fishable : MonoBehaviour
 
     private bool _isGrabbed;
 
+    protected SpriteRenderer _spriteRenderer;
+
     [HideInInspector] public bool IsGrabbed => _isGrabbed;
 
     [SerializeField] private int Value = 1;
 
-    void Start()
+    public virtual void Start()
     {
         if (Weight < 1)
             Weight = 1;
+
+        _spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     public void Collect()
@@ -26,5 +30,8 @@ public class Fishable : MonoBehaviour
     public virtual void OnGrabbed()
     {
         _isGrabbed = true;
+
+        //Make sprite sorting layer above world geometry but below bubble sprite.
+        _spriteRenderer.sortingOrder = 9;
     }
 }

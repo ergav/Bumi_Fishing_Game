@@ -7,11 +7,12 @@ public class Bubble : MonoBehaviour
     private float                       _speed = 10;
     private float                       _lifetime = 10;
     private SpriteRenderer              _spriteRenderer;
+    [SerializeField] private int        _maxBounces = 3;
 
+    private int                          _bounces;
     private bool                        _isHoldingItem;
 
     private Fishable                    _fishedObject;
-
     public bool                         IsHoldingItem => _isHoldingItem;
 
     private Rigidbody2D                 _rigidbody;
@@ -44,17 +45,22 @@ public class Bubble : MonoBehaviour
             return;
         }
 
+        if (transform.position.y > 3 && _bounces > 0)
+        {
+            Destroy(gameObject);
+        }
+
         _lifetime -= Time.deltaTime;
         if (_lifetime <= 0)
             Destroy(gameObject);
     }
 
-    public void OnInstantiate(Vector2 dir, float speed = 10, float lifetime = 10)
+    public void OnInstantiate(Vector2 dir, float speed = 10, float lifetime = 10, int maxBounces = 3)
     {
         _direction = dir;
         _speed = speed;
         _lifetime = lifetime;
-
+        _maxBounces = maxBounces;
         _rigidbody.AddForce(_direction * speed, ForceMode2D.Impulse);
 
         //StartCoroutine(LifeSpan());
@@ -96,9 +102,15 @@ public class Bubble : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        _rigidbody.gravityScale = 0.5f;
+        //_rigidbody.gravityScale = 0.5f;
 
-        _camera.ResetTarget();
+        //_camera.ResetTarget();
+
+        _bounces++;
+        if(_bounces >= _maxBounces)
+        {
+            Destroy(gameObject);
+        }
 
         if (_isHoldingItem)
             return;
@@ -121,6 +133,8 @@ public class Bubble : MonoBehaviour
             _spriteRenderer.transform.localScale = new Vector2(newSize, newSize);
 
             _fishedObject.OnGrabbed();
+
+            _camera.ResetTarget();
         }
     }
 

@@ -4,14 +4,14 @@ public class FishAI : Fishable
 {
     [SerializeField] private float  _swimSpeed = 5;
 
-    private SpriteRenderer          _spriteRenderer;
     private Rigidbody2D             _rigidbody;
     private Collider2D              _collider;
 
     private Control                 _player;
 
-    void Start()
+    public override void Start()
     {
+        base.Start();
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _rigidbody = GetComponent<Rigidbody2D>();
         _collider = GetComponent<Collider2D>();
@@ -23,12 +23,6 @@ public class FishAI : Fishable
         if (!IsGrabbed)
         {
             _rigidbody.linearVelocity = new Vector2(_swimSpeed * Time.fixedDeltaTime, 0);
-        }
-        else 
-        { 
-            _rigidbody.bodyType = RigidbodyType2D.Kinematic;
-            _rigidbody.linearVelocity = Vector2.zero;
-            _spriteRenderer.flipY = true;
         }
     }
 
@@ -42,5 +36,8 @@ public class FishAI : Fishable
     {
         base.OnGrabbed();
         _collider.isTrigger = true;
+        _rigidbody.bodyType = RigidbodyType2D.Kinematic;
+        _rigidbody.linearVelocity = Vector2.zero;
+        _spriteRenderer.flipY = true;
     }
 }
