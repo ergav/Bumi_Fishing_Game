@@ -17,11 +17,14 @@ public class Bubble : MonoBehaviour
     private Rigidbody2D                 _rigidbody;
     private Collider2D                  _collider;
 
+    private CameraFollow                _camera;
+
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
         _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         _collider = GetComponentInChildren<Collider2D>();
+        _camera = Camera.main.gameObject.GetComponent<CameraFollow>();
     }
 
     void Update()
@@ -65,6 +68,9 @@ public class Bubble : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (_isHoldingItem)
+            return;
+
         if (collision.gameObject.layer == LayerMask.NameToLayer("Fishable"))
         {
             Fishable fished = collision.GetComponent<Fishable>();
@@ -82,13 +88,20 @@ public class Bubble : MonoBehaviour
 
             _spriteRenderer.transform.localScale = new Vector2(newSize, newSize);
 
-            _fishedObject.IsGrabbed = true;
+            _fishedObject.OnGrabbed();
+
+            _camera.ResetTarget();
         }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         _rigidbody.gravityScale = 0.5f;
+
+        _camera.ResetTarget();
+
+        if (_isHoldingItem)
+            return;
 
         if (collision.gameObject.layer == LayerMask.NameToLayer("Fishable"))
         {
@@ -107,7 +120,7 @@ public class Bubble : MonoBehaviour
 
             _spriteRenderer.transform.localScale = new Vector2(newSize, newSize);
 
-            _fishedObject.IsGrabbed = true;
+            _fishedObject.OnGrabbed();
         }
     }
 

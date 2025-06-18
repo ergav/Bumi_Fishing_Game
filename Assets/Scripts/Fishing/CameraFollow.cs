@@ -4,26 +4,37 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
-    [SerializeField] private Transform _player;
-    [SerializeField] private float _smoothSpeed;
-    [SerializeField] private Vector3 _offset;
+    [SerializeField] private Transform  _player;
+    [SerializeField] private float      _smoothSpeed;
+    [SerializeField] private Vector3    _offset;
+        
+    private float                       _offsetX;
 
-    private float _offsetX;
+    [SerializeField] private float      _maximumHeight = 0;
+    [SerializeField] private float      _minimumHeight = 0;
 
-    [SerializeField] private float _maximumHeight = 0;
-    [SerializeField] private float _minimumHeight = 0;
+    private Transform                   _target;
+
+    private void Start()
+    {
+        _target = _player;
+    }
 
     private void LateUpdate()
     {
-        if (_player != null)
+        if (_target != null)
         {
             CameraMovement();
         }
+        else
+        {
+            ResetTarget();
+        }
     }
 
-    void CameraMovement()
+    private void CameraMovement()
     {
-        Vector3 desiredPos = _player.position + _offset;
+        Vector3 desiredPos = _target.position + _offset;
         Vector3 smoothedPos = Vector3.Lerp(transform.position, desiredPos, _smoothSpeed);
         transform.position = smoothedPos;
 
@@ -36,5 +47,15 @@ public class CameraFollow : MonoBehaviour
         {
             transform.position = new Vector3(transform.position.x, _maximumHeight, transform.position.z);
         }
+    }
+
+    public void SetBubbleTarget(Transform target)
+    { 
+        _target = target;
+    }
+
+    public void ResetTarget()
+    {
+        _target = _player;
     }
 }

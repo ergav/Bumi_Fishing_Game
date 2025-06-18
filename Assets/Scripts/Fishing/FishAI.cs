@@ -8,11 +8,14 @@ public class FishAI : Fishable
     private Rigidbody2D             _rigidbody;
     private Collider2D              _collider;
 
+    private Control                 _player;
+
     void Start()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _rigidbody = GetComponent<Rigidbody2D>();
         _collider = GetComponent<Collider2D>();
+        _player = FindFirstObjectByType<Control>();
     }
 
     void FixedUpdate()
@@ -31,12 +34,13 @@ public class FishAI : Fishable
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.collider.CompareTag("Player"))
-        {
-            _collider.isTrigger = true;
-        }
-
         _swimSpeed = -_swimSpeed;
         _spriteRenderer.flipX = !_spriteRenderer.flipX;
+    }
+
+    public override void OnGrabbed()
+    {
+        base.OnGrabbed();
+        _collider.isTrigger = true;
     }
 }

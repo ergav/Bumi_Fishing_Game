@@ -4,7 +4,10 @@ public class Fishable : MonoBehaviour
 {
     [Range(1.0f, 5.0f)]
     public float Weight;
-    [HideInInspector] public bool IsGrabbed;
+
+    private bool _isGrabbed;
+
+    [HideInInspector] public bool IsGrabbed => _isGrabbed;
 
     [SerializeField] private int Value = 1;
 
@@ -18,5 +21,10 @@ public class Fishable : MonoBehaviour
     {
         PointManager.Instance.Addpoints(Value);
         Destroy(gameObject);
+    }
+
+    public virtual void OnGrabbed()
+    {
+        _isGrabbed = true;
     }
 }
