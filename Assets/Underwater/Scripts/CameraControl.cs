@@ -19,7 +19,7 @@ public class CameraControl : MonoBehaviour
 
         // Zoom with scroll wheel
         distanceFromTarget -= Input.GetAxis("Mouse ScrollWheel") * 2f;
-        distanceFromTarget = Mathf.Clamp(distanceFromTarget, 2f, 15f);
+        distanceFromTarget = Mathf.Clamp(distanceFromTarget, 2f, 10f);
 
         Quaternion yawRotation = Quaternion.Euler(pitch, yaw, 0f);
 
@@ -43,6 +43,8 @@ public class CameraControl : MonoBehaviour
 
         yaw += inputDelta.x * sensitivity * Time.deltaTime;
         pitch -= inputDelta.y * sensitivity * Time.deltaTime;
+
+        pitch = Mathf.Clamp(pitch, 0f, 45f);
     }
 
     void RotateCamera(Quaternion rotation)

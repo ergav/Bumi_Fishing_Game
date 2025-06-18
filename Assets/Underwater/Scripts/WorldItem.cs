@@ -1,7 +1,7 @@
 using UnityEngine;
 
 
-public class Draggable : MonoBehaviour
+public class WorldItem : MonoBehaviour
 {
     Vector3 mousePosition;
     private bool isDragged = false;
@@ -9,7 +9,7 @@ public class Draggable : MonoBehaviour
     public InventoryManager inventoryManager;
     public ItemSO itemSO;
 
-    public static event System.Action<Draggable> OnDragEnded;
+    public static event System.Action<WorldItem> OnDragEnded;
 
     private Vector3 GetMousePosition()
     {

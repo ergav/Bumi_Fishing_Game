@@ -10,12 +10,16 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 117628819281960688, guid: 25116d8c96070eb408169dacf7934b1e, type: 3}
       propertyPath: m_Name
-      value: Item Variant
+      value: GreenCoralIcon
       objectReference: {fileID: 0}
     - target: {fileID: 1256778504145229728, guid: 25116d8c96070eb408169dacf7934b1e, type: 3}
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 2133894634611221711, guid: c12fc8899a884c549982629c750649a6, type: 3}
+    - target: {fileID: 6403498220168319467, guid: 25116d8c96070eb408169dacf7934b1e, type: 3}
+      propertyPath: itemSO
+      value: 
+      objectReference: {fileID: 11400000, guid: f769c8ce9bc2aad48b58be2985e29c08, type: 2}
     - target: {fileID: 8292810879484495191, guid: 25116d8c96070eb408169dacf7934b1e, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

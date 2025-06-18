@@ -121,5 +121,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecf7726c8e2f6a945a4144fdb6238298, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inventoryManager: {fileID: 4735422726332628745, guid: ec39cc55a087beb488075ac0e28f4e54, type: 3}
   itemSO: {fileID: 11400000, guid: f769c8ce9bc2aad48b58be2985e29c08, type: 2}
-  inventoryManager: {fileID: 6571245494225957989, guid: 85cb6fbd837fbcb44821799e8a636126, type: 3}

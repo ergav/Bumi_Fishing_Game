@@ -8,6 +8,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 454198416030397481, guid: cb822f6f970c98f4a9fea7c5ef63edd4, type: 3}
+      propertyPath: itemSO
+      value: 
+      objectReference: {fileID: 11400000, guid: 8c68d8938ffe1334f8a31aec3d0c68e5, type: 2}
     - target: {fileID: 3280189770002129045, guid: cb822f6f970c98f4a9fea7c5ef63edd4, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -94,7 +98,7 @@ PrefabInstance:
       objectReference: {fileID: 6092279074555388371, guid: 1f496bc12159d694eb5b5168e18365e3, type: 3}
     - target: {fileID: 6859420319238961970, guid: cb822f6f970c98f4a9fea7c5ef63edd4, type: 3}
       propertyPath: m_Name
-      value: Item Variant
+      value: RedCoralIcon
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

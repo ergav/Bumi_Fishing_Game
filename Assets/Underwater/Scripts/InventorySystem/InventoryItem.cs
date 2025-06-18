@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -46,6 +47,22 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         Slot dropSlot = eventData.pointerEnter?.GetComponentInParent<Slot>();
         Slot originalSlot = originalParent?.GetComponent<Slot>();
 
+        if (IsMouseOverDropArea())
+        {
+            // Spawn 3D object and remove from UI
+            Vector3 mousePos = Input.mousePosition;
+            mousePos.z = 5f; 
+            Vector3 spawnPos = Camera.main.ScreenToWorldPoint(mousePos);
+
+            Instantiate(itemSO.prefab, spawnPos, Quaternion.identity);
+
+            if (originalSlot != null)
+                originalSlot.currentItem = null;
+
+            Destroy(gameObject); // Remove the dragged UI item
+            return;
+        }
+
         if (dropSlot != null)
         {
             if (dropSlot.currentItem != null)
@@ -63,11 +80,31 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
             transform.SetParent(dropSlot.transform); // Move the dragged item to the new slot
             dropSlot.currentItem = gameObject; // Set the current item of the drop slot
         }
+
         else
         {
             // If not dropped in a valid area, return to original position
             transform.SetParent(originalParent);
         }
         GetComponent<RectTransform>().anchoredPosition = Vector2.zero; // Reset anchored position
+    }
+
+    bool IsMouseOverDropArea()
+    {
+        PointerEventData pointerData = new PointerEventData(EventSystem.current)
+        {
+            position = Input.mousePosition
+        };
+
+        List<RaycastResult> results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(pointerData, results);
+
+        foreach (RaycastResult result in results)
+        {
+            if (result.gameObject.CompareTag("DropArea"))
+                return true;
+        }
+
+        return false;
     }
 }
