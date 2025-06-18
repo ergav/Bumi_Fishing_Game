@@ -24,6 +24,8 @@ public class Control : MonoBehaviour
     [SerializeField] private Sprite         _hookReachSprite;
     [SerializeField] private Sprite         _hookGrabSprite;
 
+    public Fishable                         FishedObject => _fishedObject;
+
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
@@ -86,7 +88,7 @@ public class Control : MonoBehaviour
             col.transform.position = _hookItemPoint.transform.position;
             col.transform.SetParent(_hookItemPoint);
             _fishedObject = collidedFishable;
-            _fishedObject.IsGrabbed = true;
+            _fishedObject.OnGrabbed();
         }
     }
 }

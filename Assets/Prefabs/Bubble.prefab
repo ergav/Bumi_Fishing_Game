@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 579758819511395945}
   - component: {fileID: 3061264139153038602}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: BubbleSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -99,7 +99,7 @@ GameObject:
   - component: {fileID: 3031550756959960448}
   - component: {fileID: 3458299696286863188}
   - component: {fileID: 3586713566566439107}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Bubble
   m_TagString: Untagged
   m_Icon: {fileID: 0}

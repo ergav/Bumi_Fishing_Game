@@ -105,7 +105,7 @@ MonoBehaviour:
   Weight: 1
   IsGrabbed: 0
   Value: 1
-  _swimSpeed: -250
+  _swimSpeed: -200
 --- !u!50 &4933810388843987580
 Rigidbody2D:
   serializedVersion: 5
@@ -131,7 +131,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!61 &5927894187165885409
 BoxCollider2D:

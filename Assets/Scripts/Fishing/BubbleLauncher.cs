@@ -10,8 +10,17 @@ public class BubbleLauncher : MonoBehaviour
     [SerializeField] private float              _bubbleLifetime = 10;
     [SerializeField] private SpriteRenderer     _crosshair;
     [SerializeField] private GameObject         _bubbleGunUI;
+    [SerializeField] private bool               _willCameraFollowBubble;
 
     private Bubble                              _firedBubble;
+    private CameraFollow                        _camera;
+    private bool                                _isAimModeOn;
+
+    private void Start()
+    {
+        _camera = Camera.main.gameObject.GetComponent<CameraFollow>();
+    }
+
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
@@ -35,6 +44,14 @@ public class BubbleLauncher : MonoBehaviour
             }
         }
 
+        if (_isAimModeOn)
+        {
+            float angle = Mathf.Atan2(_crosshair.transform.position.y - transform.position.y, _crosshair.transform.position.x - transform.position.x) * Mathf.Rad2Deg;
+            Quaternion targetRotation = Quaternion.Euler(new Vector3(0, 0, angle));
+
+            transform.rotation = targetRotation;
+        }
+
         //if (Input.GetMouseButtonDown(1))
         //{
         //    ShootBubble();
@@ -47,11 +64,6 @@ public class BubbleLauncher : MonoBehaviour
         Vector3 mousePos3D = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
         _crosshair.transform.position = mousePos;
-
-        float angle = Mathf.Atan2(_crosshair.transform.position.y - transform.position.y, _crosshair.transform.position.x - transform.position.x) * Mathf.Rad2Deg;
-        Quaternion targetRotation = Quaternion.Euler(new Vector3(0, 0, angle));
-
-        transform.rotation = targetRotation;
     }
 
     public void ShootBubble()
@@ -73,17 +85,24 @@ public class BubbleLauncher : MonoBehaviour
         _firedBubble.OnInstantiate(toOther, _bubbleSpeed, _bubbleLifetime);
 
         ToggleUIOff();
+
+        if (_willCameraFollowBubble)
+        {
+            _camera.SetBubbleTarget(_firedBubble.transform);
+        }
     }
 
     public void ToggleUIOn()
     {
         _bubbleGunUI.SetActive(true);
         _crosshair.enabled = true;
+        _isAimModeOn = true;
     }
     public void ToggleUIOff()
     {
         _bubbleGunUI.SetActive(false);
         _crosshair.enabled = false;
+        _isAimModeOn = false;
     }
 
     private bool IsMouseOverUI()
