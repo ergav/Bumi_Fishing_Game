@@ -1,19 +1,21 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
+    [SerializeField] private float _spawnDistance = 3f; // Distance from the camera to spawn the item in the world
+
     public ItemSO itemSO;
     public Image itemIcon;
-    private Transform originalParent;
-    private CanvasGroup canvasGroup;
+
+    private Transform _originalParent;
+    private CanvasGroup _canvasGroup;
 
     private void Start()
     {
-        canvasGroup = GetComponent<CanvasGroup>();
+        _canvasGroup = GetComponent<CanvasGroup>();
     }
 
     public void Setup(ItemSO newItemSO)
@@ -28,10 +30,10 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        originalParent = transform.parent;
+        _originalParent = transform.parent;
         transform.SetParent(transform.root); // Move to root to avoid being blocked by other UI elements
-        canvasGroup.blocksRaycasts = false; // Disable raycast blocking to allow drop detection
-        canvasGroup.alpha = 0.6f; // Make the item semi-transparent while dragging
+        _canvasGroup.blocksRaycasts = false; // Disable raycast blocking to allow drop detection
+        _canvasGroup.alpha = 0.6f; // Make the item semi-transparent while dragging
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -41,17 +43,17 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        canvasGroup.blocksRaycasts = true; // Re-enable raycast blocking
-        canvasGroup.alpha = 1f; // Reset transparency
+        _canvasGroup.blocksRaycasts = true; // Re-enable raycast blocking
+        _canvasGroup.alpha = 1f; // Reset transparency
 
         Slot dropSlot = eventData.pointerEnter?.GetComponentInParent<Slot>();
-        Slot originalSlot = originalParent?.GetComponent<Slot>();
+        Slot originalSlot = _originalParent?.GetComponent<Slot>();
 
-        if (IsMouseOverDropArea())
+        if (dropSlot == null && IsMouseOverDropArea())
         {
             // Spawn 3D object and remove from UI
             Vector3 mousePos = Input.mousePosition;
-            mousePos.z = 5f; 
+            mousePos.z = _spawnDistance;
             Vector3 spawnPos = Camera.main.ScreenToWorldPoint(mousePos);
 
             Instantiate(itemSO.prefab, spawnPos, Quaternion.identity);
@@ -62,8 +64,9 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
             Destroy(gameObject); // Remove the dragged UI item
             return;
         }
+        // Check if dropped over a valid drop slot
 
-        if (dropSlot != null)
+        if (dropSlot != null && dropSlot != originalSlot)
         {
             if (dropSlot.currentItem != null)
             {
@@ -74,7 +77,8 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
             }
             else
             {
-                originalSlot.currentItem = null; // Clear the original slot if the item is dropped in a new slot
+                if (originalSlot != null)
+                    originalSlot.currentItem = null; // Clear the original slot if the item is dropped in a new slot
             }
 
             transform.SetParent(dropSlot.transform); // Move the dragged item to the new slot
@@ -84,7 +88,11 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         else
         {
             // If not dropped in a valid area, return to original position
-            transform.SetParent(originalParent);
+            transform.SetParent(_originalParent);
+
+            // Restore reference to the original slot
+            if (originalSlot != null && originalSlot.currentItem == null)
+                originalSlot.currentItem = gameObject;
         }
         GetComponent<RectTransform>().anchoredPosition = Vector2.zero; // Reset anchored position
     }

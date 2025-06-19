@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Slot
   - DropArea
+  - Fish
   layers:
   - Default
   - TransparentFX

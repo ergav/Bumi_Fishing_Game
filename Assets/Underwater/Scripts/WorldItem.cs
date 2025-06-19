@@ -2,17 +2,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-
 public class WorldItem : MonoBehaviour
 {
     Vector3 mousePosition;
-    private bool isDragged = false;
-    private Slot hoveredSlot;
+    private bool _isDragged = false;
+    private Slot _hoveredSlot;
+    private Rigidbody _rb;
 
     public InventoryManager inventoryManager;
     public ItemSO itemSO;
 
     public static event System.Action<WorldItem> OnDragEnded;
+
+
+    private void Awake()
+    {
+        _rb = GetComponent<Rigidbody>();
+    }
 
     private Vector3 GetMousePosition()
     {
@@ -21,13 +27,13 @@ public class WorldItem : MonoBehaviour
 
     private void OnMouseDown()
     {
-        isDragged = true;
+        _isDragged = false;
         mousePosition = Input.mousePosition - GetMousePosition();
     }
 
     private void OnMouseDrag()
     {
-        if (isDragged)
+        if (_isDragged)
         {
             transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition - mousePosition);
         }
@@ -35,19 +41,21 @@ public class WorldItem : MonoBehaviour
 
     private void OnMouseUp()
     {
-        isDragged = false;
+        _isDragged = false;
         OnDragEnded?.Invoke(this);
 
         if (IsMouseOverSlot())
         {
             // Spawn UI item and remove 3D object
-            GameObject uiItem = Instantiate(itemSO.iconPrefab, hoveredSlot.transform);
+            GameObject uiItem = Instantiate(itemSO.iconPrefab, _hoveredSlot.transform);
             uiItem.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
 
             InventoryItem invItem = uiItem.GetComponent<InventoryItem>();
             invItem.Setup(itemSO);
 
-            hoveredSlot.currentItem = uiItem;
+            //invItem.originalParent = hoveredSlot.transform;
+
+            _hoveredSlot.currentItem = uiItem;
 
             Destroy(gameObject); // Remove the 3D object
             return;
@@ -56,7 +64,7 @@ public class WorldItem : MonoBehaviour
 
     bool IsMouseOverSlot()
     {
-        hoveredSlot = null;
+        _hoveredSlot = null;
 
         PointerEventData pointerData = new PointerEventData(EventSystem.current)
         {
@@ -70,7 +78,7 @@ public class WorldItem : MonoBehaviour
         {
             if (result.gameObject.CompareTag("Slot"))
             {
-                hoveredSlot = result.gameObject.GetComponent<Slot>();
+                _hoveredSlot = result.gameObject.GetComponent<Slot>();
                 return true;
             }
                 

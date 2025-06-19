@@ -101,5 +101,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec6b39cd58a34fc4b94bac4d9c4aa589, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _spawnDistance: 3
   itemSO: {fileID: 11400000, guid: a9e1b2c957275e74f8d2687fcc571831, type: 2}
   itemIcon: {fileID: 1256778504145229728}

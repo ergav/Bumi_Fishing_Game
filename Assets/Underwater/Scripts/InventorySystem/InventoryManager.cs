@@ -1,12 +1,9 @@
 using UnityEngine;
-using System.Collections.Generic;
-using System.Collections;
-using Unity.VisualScripting;
 
 public class InventoryManager : MonoBehaviour
 {
-    [SerializeField] private GameObject inventoryParent;
-    [SerializeField] private GameObject slotPrefab;
+    [SerializeField] private GameObject _inventoryParent;
+    [SerializeField] private GameObject _slotPrefab;
 
     public GameObject iconPrefab;
     public int slotCount;
@@ -27,7 +24,7 @@ public class InventoryManager : MonoBehaviour
 
         for (int i = 0; i < slotCount; i++)
         {
-            Slot slot = Instantiate(slotPrefab, inventoryParent.transform).GetComponent<Slot>();
+            Slot slot = Instantiate(_slotPrefab, _inventoryParent.transform).GetComponent<Slot>();
 
             if (i < itemPrefabs.Length)
             {
@@ -40,7 +37,7 @@ public class InventoryManager : MonoBehaviour
 
     private void Update()
     {
-        inventoryParent.SetActive(isInventoryOpened);
+        _inventoryParent.SetActive(isInventoryOpened);
 
     }
 
