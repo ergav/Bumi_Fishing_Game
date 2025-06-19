@@ -107,7 +107,7 @@ public class Bubble : MonoBehaviour
         //_camera.ResetTarget();
 
         _bounces++;
-        if(_bounces >= _maxBounces)
+        if(_bounces > _maxBounces)
         {
             Destroy(gameObject);
         }
