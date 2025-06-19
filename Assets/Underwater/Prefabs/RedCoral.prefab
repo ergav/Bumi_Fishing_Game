@@ -122,4 +122,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventoryManager: {fileID: 4735422726332628745, guid: ec39cc55a087beb488075ac0e28f4e54, type: 3}
-  itemSO: {fileID: 0}
+  itemSO: {fileID: 11400000, guid: 8c68d8938ffe1334f8a31aec3d0c68e5, type: 2}

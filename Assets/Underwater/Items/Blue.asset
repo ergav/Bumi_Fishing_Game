@@ -14,3 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Blue Coral
   icon: {fileID: 7440898799035974660, guid: 36a149651839a064fae8032671bf31cd, type: 3}
+  prefab: {fileID: 6468316265741325398, guid: f02e452953f5c0643995475a369fb44b, type: 3}
+  iconPrefab: {fileID: 117628819281960688, guid: 25116d8c96070eb408169dacf7934b1e, type: 3}

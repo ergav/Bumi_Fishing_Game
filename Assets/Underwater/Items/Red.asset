@@ -14,3 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Red Coral
   icon: {fileID: 6092279074555388371, guid: 1f496bc12159d694eb5b5168e18365e3, type: 3}
+  prefab: {fileID: 5196815635625710854, guid: 2bc511e7e2e0e0748b29c8332547ee75, type: 3}
+  iconPrefab: {fileID: 6750558544688448154, guid: 8adabae005d3604489dcc7d57f4ce25d, type: 3}

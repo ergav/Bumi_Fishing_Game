@@ -7,8 +7,8 @@ public class InventoryManager : MonoBehaviour
 {
     [SerializeField] private GameObject inventoryParent;
     [SerializeField] private GameObject slotPrefab;
-    [SerializeField] private GameObject iconPrefab;
 
+    public GameObject iconPrefab;
     public int slotCount;
     public GameObject[] itemPrefabs;
 
@@ -43,6 +43,7 @@ public class InventoryManager : MonoBehaviour
         inventoryParent.SetActive(isInventoryOpened);
 
     }
+
     public void ToggleInventory()
     {
         isInventoryOpened = !isInventoryOpened;

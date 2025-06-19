@@ -14,3 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Green Coral
   icon: {fileID: 2133894634611221711, guid: c12fc8899a884c549982629c750649a6, type: 3}
+  prefab: {fileID: 3548894794855514581, guid: 3a4403fa1a13504459f79bda409713d3, type: 3}
+  iconPrefab: {fileID: 6859420319238961970, guid: cb822f6f970c98f4a9fea7c5ef63edd4, type: 3}
