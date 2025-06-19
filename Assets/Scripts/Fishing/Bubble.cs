@@ -20,6 +20,8 @@ public class Bubble : MonoBehaviour
 
     private CameraFollow                _camera;
 
+    private bool                        _hasReachedSurface;
+
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
@@ -32,6 +34,15 @@ public class Bubble : MonoBehaviour
     {
         if (_isHoldingItem)
         {
+            if(_fishedObject == null)
+                Destroy(gameObject);
+
+            if (_hasReachedSurface)
+            {
+                _rigidbody.linearVelocity = Vector2.zero;
+                return;
+            }
+
             _collider.isTrigger = true;
             _rigidbody.linearVelocity = Vector2.zero;
             _rigidbody.bodyType = RigidbodyType2D.Kinematic;
@@ -63,14 +74,7 @@ public class Bubble : MonoBehaviour
         _maxBounces = maxBounces;
         _rigidbody.AddForce(_direction * speed, ForceMode2D.Impulse);
 
-        //StartCoroutine(LifeSpan());
     }
-
-    //IEnumerator LifeSpan()
-    //{
-    //    yield return new WaitForSeconds(_lifetime);
-    //    Destroy(gameObject);
-    //}
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -102,10 +106,6 @@ public class Bubble : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        //_rigidbody.gravityScale = 0.5f;
-
-        //_camera.ResetTarget();
-
         _bounces++;
         if(_bounces > _maxBounces)
         {
@@ -139,6 +139,11 @@ public class Bubble : MonoBehaviour
     }
 
     public void OnReachSurface()
+    {
+        _hasReachedSurface = true;
+    }
+
+    public void CollectItem()
     {
         _fishedObject.Collect();
         Destroy(gameObject);

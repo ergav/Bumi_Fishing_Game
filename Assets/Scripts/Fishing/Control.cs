@@ -91,4 +91,14 @@ public class Control : MonoBehaviour
             _fishedObject.OnGrabbed();
         }
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Fishable"))
+        {
+            Fishable fishable = collision.GetComponent<Fishable>();
+
+            fishable.Collect();
+        }
+    }
 }

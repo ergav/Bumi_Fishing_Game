@@ -52,11 +52,6 @@ public class BubbleLauncher : MonoBehaviour
 
             transform.rotation = targetRotation;
         }
-
-        //if (Input.GetMouseButtonDown(1))
-        //{
-        //    ShootBubble();
-        //}
     }
 
     private void SetCrosshair()

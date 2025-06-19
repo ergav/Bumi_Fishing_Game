@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5927894187165885409}
   m_Layer: 6
   m_Name: Fish
-  m_TagString: Untagged
+  m_TagString: Fishable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -103,7 +103,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Weight: 1
-  IsGrabbed: 0
   Value: 1
   _swimSpeed: -200
 --- !u!50 &4933810388843987580
